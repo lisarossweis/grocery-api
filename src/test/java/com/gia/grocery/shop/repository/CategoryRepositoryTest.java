@@ -40,4 +40,36 @@ public class CategoryRepositoryTest {
     assertEquals(title, category.title);
     assertEquals(imageUrl, category.imageUrl);
   }
+
+  @Test
+  @TestTransaction
+  public void shouldUpdateCategory() {
+    String title = "Vegetables";
+    String imageUrl = "https://cdn.gia-gracery/img/category/vegetables.svg";
+
+    Category category = new Category();
+    category.title = title;
+    category.imageUrl = imageUrl;
+
+    Category.persist(category);
+    assertNotNull(category.id);
+    Long originalId = category.id;
+
+    category = Category.findById(category.id);
+    assertEquals(title, category.title);
+    assertEquals(imageUrl, category.imageUrl);
+
+    // update category data
+    title = "Vegetables";
+    imageUrl = "https://cdn.gia-gracery/img/category/vegetables.svg";
+
+    category.title = title;
+    category.imageUrl = imageUrl;
+    Category.persist(category);
+
+    category = Category.findById(category.id);
+    assertEquals(originalId, category.id);
+    assertEquals(title, category.title);
+    assertEquals(imageUrl, category.imageUrl);
+  }
 }
