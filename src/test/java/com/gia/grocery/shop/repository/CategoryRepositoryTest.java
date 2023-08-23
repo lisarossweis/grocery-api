@@ -1,5 +1,6 @@
 package com.gia.grocery.shop.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
@@ -21,5 +22,22 @@ public class CategoryRepositoryTest {
 
     Category.persist(category);
     assertNotNull(category.id);
+  }
+
+  @Test
+  @TestTransaction
+  public void shouldFindCategory() {
+    String title = "Vegetables";
+    String imageUrl = "https://cdn.gia-gracery/img/category/vegetables.svg";
+    Category category = new Category();
+    category.title = title;
+    category.imageUrl = imageUrl;
+
+    Category.persist(category);
+    assertNotNull(category.id);
+
+    category = Category.findById(category.id);
+    assertEquals(title, category.title);
+    assertEquals(imageUrl, category.imageUrl);
   }
 }
