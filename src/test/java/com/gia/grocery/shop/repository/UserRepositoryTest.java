@@ -29,6 +29,30 @@ public class UserRepositoryTest {
 
   @Test
   @TestTransaction
+  public void shouldFindUser() {
+    String name = "John Snow";
+    String email = "john.snow@stark.com";
+    String password = "YouKnowNothing";
+    UserRole role = UserRole.ADMIN;
+
+    User user = new User();
+    user.name = name;
+    user.email = email;
+    user.password = password;
+    user.role = role;
+
+    User.persist(user);
+    assertNotNull(user.id);
+
+    user = User.findById(user.id);
+    assertEquals(name, user.name);
+    assertEquals(email, user.email);
+    assertEquals(password, user.password);
+    assertEquals(role, user.role);
+  }
+
+  @Test
+  @TestTransaction
   public void shouldUpdateUser() {
     String name = "John Snow";
     String email = "john.snow@stark.com";
