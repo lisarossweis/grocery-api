@@ -103,4 +103,22 @@ public class ProductRepositoryTest {
     assertEquals(price, product.price);
     assertEquals(unit, product.unit);
   }
+
+  @Test
+  @TestTransaction
+  public void shouldDeleteProduct() {
+    Product product = new Product();
+    product.name = "Carrot";
+    product.imageUrl = "https://cnd.gia-grocery.com/img/products/carrot.webp";
+    product.stock = 100;
+    product.price = new BigDecimal(20);
+    product.unit = Unit.GRAM;
+
+    Product.persist(product);
+    assertNotNull(product.id);
+
+    boolean isDeleted = Product.deleteById(product.id);
+    assertTrue(isDeleted);
+    assertEquals(0, Product.count());
+  }
 }
