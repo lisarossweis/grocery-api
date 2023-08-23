@@ -2,6 +2,7 @@ package com.gia.grocery.shop.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -93,5 +94,22 @@ public class UserRepositoryTest {
     assertEquals(email, user.email);
     assertEquals(password, user.password);
     assertEquals(role, user.role);
+  }
+
+  @Test
+  @TestTransaction
+  public void shouldDeleteUser() {
+    User user = new User();
+    user.name = "John Snow";
+    user.email = "john.snow@stark.com";
+    user.password = "secret";
+    user.role = UserRole.ADMIN;
+
+    User.persist(user);
+    assertNotNull(user.id);
+
+    boolean isDeleted = User.deleteById(user.id);
+    assertTrue(isDeleted);
+    assertEquals(0, User.count());
   }
 }
