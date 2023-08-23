@@ -76,6 +76,9 @@ public class ProductRepositoryTest {
 
     Product.persist(product);
     assertNotNull(product.id);
+    Long originalId = product.id;
+
+    product = Product.findById(product.id);
     assertEquals(name, product.name);
     assertEquals(imageUrl, product.imageUrl);
     assertEquals(stock, product.stock);
@@ -97,6 +100,7 @@ public class ProductRepositoryTest {
     Product.persist(product);
 
     product = Product.findById(product.id);
+    assertEquals(originalId, product.id);
     assertEquals(name, product.name);
     assertEquals(imageUrl, product.imageUrl);
     assertEquals(stock, product.stock);
