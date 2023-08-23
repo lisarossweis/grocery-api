@@ -17,7 +17,7 @@ public class Product extends PanacheEntity {
   @Column(length = 100, nullable = false)
   public String name;
 
-  @Column(nullable = false)
+  @Column(name = "image_url", nullable = false)
   public String imageUrl;
 
   @Column(nullable = false)
