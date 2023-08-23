@@ -14,6 +14,9 @@ public class Category extends PanacheEntity {
   @Column(length = 50, nullable = false)
   public String title;
 
+  @Column(name = "image_url")
+  public String imageUrl;
+
   @Column(name = "created_at", nullable = false)
   public Instant createdAt = Instant.now();
 
