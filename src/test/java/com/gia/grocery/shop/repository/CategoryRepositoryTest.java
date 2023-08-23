@@ -2,6 +2,7 @@ package com.gia.grocery.shop.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -71,5 +72,20 @@ public class CategoryRepositoryTest {
     assertEquals(originalId, category.id);
     assertEquals(title, category.title);
     assertEquals(imageUrl, category.imageUrl);
+  }
+
+  @Test
+  @TestTransaction
+  public void shouldDeleteCategory() {
+    Category category = new Category();
+    category.title = "Vegetables";
+    category.imageUrl = "https://cdn.gia-gracery/img/category/vegetables.svg";
+
+    Category.persist(category);
+    assertNotNull(category.id);
+
+    boolean isDeleted = Category.deleteById(category.id);
+    assertTrue(isDeleted);
+    assertEquals(0, Category.count());
   }
 }
